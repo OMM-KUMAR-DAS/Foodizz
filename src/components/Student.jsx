@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +24,9 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuIcon from '@mui/icons-material/Menu';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HistoryIcon from '@mui/icons-material/History';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Lottie from "lottie-react";
+import { deletetoken } from "../store/tokenSlice";
 
 
 const Student = () => {
@@ -37,10 +39,16 @@ const Student = () => {
   const navigate=useNavigate()
 
   const ele = useSelector((state) => state.tok);
+  
+
+
   const animationData = require('c:/Users/HP/Downloads/Animation - 1716322537574.json')
 
   const [anchorEl, setAnchorEl] = useState(null);
+
   const open = Boolean(anchorEl);
+
+  const dispatch= useDispatch()
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -56,6 +64,19 @@ const Student = () => {
  
 
   useEffect(() => {
+
+
+    console.log(ele[0])
+    if(ele[0].token==='')
+      {
+        navigate('/login')
+        toast.error(`Successfully logout`, {
+          position: toast.TOP_CENTER,
+        });
+
+        return
+      }
+    
 
 
     function getfoods() {
@@ -115,8 +136,10 @@ const Student = () => {
 
     getfoods();
     getcart();
+    // console.log(ele[0].token)
+  
 
-  }, []);
+  }, [ele]);
 
 
 
@@ -231,6 +254,11 @@ const Student = () => {
     });
   }
 
+  function logout()
+  {
+      dispatch(deletetoken()) 
+  }
+
   return (
     <Box sx={{width:'100%',minHeight:'100vh'}}>
 
@@ -294,6 +322,12 @@ const Student = () => {
               <HistoryIcon sx={{ mr: 1 }} />
               Order history
             </MenuItem>
+
+            <MenuItem onClick={logout}>
+             
+             <LogoutIcon sx={{ mr: 1 }} />
+             Logout
+            </MenuItem>  
            
           </Menu>    
 

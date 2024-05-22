@@ -1,268 +1,276 @@
 
-// import React from 'react'
-// import { useState } from 'react'
-// import { toast} from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-// import Form from 'react-bootstrap/Form';
+import React from 'react'
+import { useState } from 'react'
 
-// const Admin = () => {
+import 'react-toastify/dist/ReactToastify.css';
+import { Box,Dialog,DialogTitle,DialogContent,TextField,Button,DialogActions,Slide,FormControl,InputLabel,Select,MenuItem} from '@mui/material';
+import Lottie from 'lottie-react';
+
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
+
+const Admin = () => {
   
-//   const[addfood,seta]=useState({image:"",title:"", des:"" ,price:"",category:"",choice:""})
+
+  const[open,setopen]= useState(false)
+  const[choice,setchoice]= useState()
+  const animatedData= require('c:/Users/HP/Downloads/Animation - 1716373491110.json')
+  const navigate= useNavigate()
+
+
+
+  console.log("hello")
   
-  
-
-// function handleuser(event)
-// {
-//   seta((prev)=>(
-//     {
-//        ...prev,[event.target.name]:event.target.value
-//     }))
-// }
-
-
-
-// function give(event)
-// {
-//   event.preventDefault()
-//   // console.log("hi")
-//   toast.success(`Item added`, {
-//     position: toast.POSITION.TOP_CENTER
-//   });
-  
-//   fetch('http://localhost:8000/api/v2/addfood',{
-
-//     method:"POST",
-   
-//     headers:{
-//       "Content-Type":"application/json",
-//     },
-      
-//       body:JSON.stringify({
-        
-//         image:addfood.image,
-//         title:addfood.title,
-//         des:addfood.des,
-//         category:addfood.category,
-//         choice:addfood.choice,
-//         price:addfood.price
-
-//       }),
-      
-       
-     
-
-      
-
 //   })
 
-// }
+//   }
 
-//   return (
-//     <div className='forr'>
-//         <div className="air">
-//           <form onSubmit={give} className='form'>
+  function handleclose()
+  {
+    setopen(false)
+    setchoice()
+  }
+
+  function handleopen()
+  {
+    setopen(true)
+  }
+
+  function handleChoiceChange(event)
+  {
+    setchoice(event.target.value)
+  }
+
+  return (
+    <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',width:'100vw',minHeight:'100vh',
+        backgroundImage:'url(https://png.pngtree.com/background/20210711/original/pngtree-cartoon-gourmet-food-hamburger-yellow-banner-picture-image_1092229.jpg)',
+        backgroundRepeat:'no-repeat',
+        backgroundSize: 'cover',
+        
+        
+    }}>
+        
                 
-//                 <label>
-
-//                             <p>Add image<sup>*</sup></p>
-
-//                             {/* <input
-
-//                                         required
-//                                         type="text"
-//                                         name="image"
-//                                         value={addfood.image}
-//                                         onChange={handleuser}
-//                                         // className="in"
-//                             /> */}
+                        
+                                        <Lottie
+                                            animationData={animatedData}
+                                            loop
+                                            autoplay
+                                            onClick={handleopen}
+                                            style={{display:'flex',justifyContent:'center',alignItems:'center',width:'150px',}}
+                                        />
 
 
-//                               <Form.Control
-//                                   type="text"
-//                                   size="sm"
-//                                   name="image"
-//                                   value={addfood.image}
-//                                   onChange={handleuser}
-                                  
-                                  
-//                             />
+               
 
 
-  
-//                 </label>
-
-//                 <br></br>
 
 
-//                 <label>
-
-//                             <p>Add Dish<sup>*</sup></p>
-                              
-//                             {/* <input
-
-//                                         required
-//                                         type="text"
-//                                         name="title"
-//                                         value={addfood.title}
-//                                         onChange={handleuser}
-//                                         // className="in"
-//                                         placeholder="Give title"
-                            
-//                             /> */}
 
 
-//                               <Form.Control
-//                                     type="text"
-                                   
-//                                     size="sm"
-//                                     name="title"
-//                                     value={addfood.title}
-//                                     onChange={handleuser}
-                                    
-//                                     placeholder="give food title"
-//                             />
-  
-//                 </label>
-                 
-//                 <br></br>
+                 <Dialog
+                                                open={open}
+                                                onClose={handleclose}
+                                                sx={{ '& .MuiPaper-root': { borderRadius: 8,transition: 'transform 0.5s ease-in-out', 
+                                                 backgroundColor:'#ddfff7',
+                                                '&:hover': {
+                                                   boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.9)',
+                                                   transform: 'scale(1.1)',  
+                                               },} }}
+                                                TransitionComponent={Transition}
+                                                PaperProps={{
+                                                component: 'form',
+                                                
+                                                onSubmit: (event) => {
+                                                    event.preventDefault();
+                                                    const formData = new FormData(event.currentTarget);
+                                                    const formJson = Object.fromEntries(formData.entries());
+                                                    console.log(formJson)
+                                                    console.log(choice)
 
-//                 <label>
+                                                    try{
 
-//                             <p>Description:<sup>*</sup></p>
-                              
-//                             {/* <input
+                                                        fetch('http://localhost:8000/api/v2/addfood',{
 
-//                                         required
-//                                         type="text"
-//                                         name="des"
-//                                         value={addfood.des}
-//                                         onChange={handleuser}
-//                                         // className="in"
-//                                         placeholder="Give description"
-                            
-//                             /> */}
+                                                            method:"POST",
+                                                           
+                                                            headers:{
+                                                              "Content-Type":"application/json",
+                                                            },
+                                                              
+                                                              body:JSON.stringify({
+                                                                
+                                                                image:formJson.image,
+                                                                title:formJson.title,
+                                                                des:formJson.des,
+                                                                category:formJson.category,
+                                                                choice:choice,
+                                                                price:formJson.price
+                                                        
+                                                              }),
 
-                  
-//                             <Form.Control as="textarea" 
-//                              name="des"
-//                              value={addfood.des}
-//                              onChange={handleuser}
-                             
-//                              placeholder="give food description"/>
-  
-//                 </label>
+                                                        })
+                                                        .then(response=>response.json())
+                                                        .then(data=>{
+                                                            console.log(data)
+                                                            if(data.success==="false")
+                                                                {
+                                                                    toast.dark(`Not able to add food due to some error`, {
+                                                                        position: toast.BOTTOM_RIGHT
+                                                                      });
+                                                                      navigate('/internal_server')
+                                                                }
 
-//                 <br></br>
+                                                            else{
+                                                                toast.success(`Food added succesfully`, {
+                                                                    position: toast.BOTTOM_RIGHT
+                                                                  });
+                                                                  setopen(false)
+                                                            }    
+                                                        })      
 
-//                 <label>
+                                                    }catch(err)
+                                                    {
+                                                        console.log(err)
+                                                    }
 
-//                             <p>Price:<sup>*</sup></p>
-                              
-//                             {/* <input
+                                                }}}
 
-//                                         required
-//                                         type="number"
-//                                         name="price"
-//                                         value={addfood.price}
-//                                         onChange={handleuser}
-//                                         // className="in"
-                                        
-                            
-//                             /> */}
+                                                   
+                                        >
 
+                                        <DialogTitle sx={{textAlign:'center'}}>Add Food</DialogTitle>
 
-//                              <Form.Control
-//                               type="number"
-                              
-//                               size="sm"
-//                               name="price"
-//                               value={addfood.price}
-//                               onChange={handleuser}
-                              
-//                               placeholder="give price"
-//                             />
-  
-//                 </label>
-                   
-//                 <br></br>
-
-//                  <label>
-
-//                             <p>Category:<sup>*</sup></p>
-                              
-//                             {/* <input
-
-//                                         required
-//                                         type="text"
-//                                         name="category"
-//                                         value={addfood.category}
-//                                         onChange={handleuser}
-//                                         // className="in"
-                                        
-                            
-//                             /> */}
+                                        <DialogContent>
 
 
-//                              <Form.Control
-//                                     type="text"
-                                    
-//                                     size="sm"
-//                                     name="category"
-//                                     value={addfood.category}
-//                                     onChange={handleuser}
-                                    
-//                             />
-  
-//                 </label>
-                   
-//                 <br></br>
-//                 <label>
+                                        <TextField
+                                                autoFocus
+                                                required
+                                                margin="dense"
+                                                id="n"
+                                                name="image"
+                                                label="Image Link"
+                                                type="string"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={(e)=>e.target.value}
+                                        />
 
-//                             <p>Choice:<sup>*</sup></p>
-                              
-//                             {/* <input
+                                        <TextField
 
-//                                         required
-//                                         type="text"
-//                                         name="choice"
-//                                         value={addfood.choice}
-//                                         onChange={handleuser}
-//                                         // className="in"
-                                        
-                            
-//                             /> */}
+                                                autoFocus
+                                                required
+                                                margin="dense"
+                                                id="p"
+                                                name="title"
+                                                label="Food Name"
+                                                type="string"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={(e)=>e.target.value}
+                                        />
+
+                                        <TextField
+
+                                                autoFocus
+                                                required
+                                                margin="dense"
+                                                id="pin"
+                                                name="price"
+                                                label="Food Price"
+                                                type="number"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={(e)=>e.target.value}
+                                        />
+
+                                        <TextField
+
+                                                autoFocus
+                                                required
+                                                margin="dense"
+                                                id="pii"
+                                                name="category"
+                                                label="Food Category"
+                                                type="string"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={(e)=>e.target.value}
+                                        />
+
+                                        {/* <TextField
+
+                                                autoFocus
+                                                required
+                                                margin="dense"
+                                                id="pi"
+                                                name="choice"
+                                                label="Veg/Nonveg"
+                                                type="string"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={(e)=>e.target.value}
+                                        /> */}
+                                        <FormControl fullWidth margin="dense" variant="standard">
+                                                <InputLabel id="choice-label">Veg/Nonveg</InputLabel>
+                                                        <Select
+                                                            labelId="choice-label"
+                                                            id="choice"
+                                                            name="choice"
+                                                            value={choice}
+                                                            onChange={handleChoiceChange}
+                                                            label="Veg/nonveg"
+                                                            >
+                                                                <MenuItem value="veg">veg</MenuItem>
+                                                                <MenuItem value="nonveg">nonveg</MenuItem>
+                                                        </Select>
+                                        </FormControl>
 
 
-//                              <Form.Control
-//                                       type="text"
-                                      
-//                                       size="sm"
-//                                       name="choice"
-//                                       value={addfood.choice}
-//                                       onChange={handleuser}
-                                      
-                                     
-//                             />
-  
-//                 </label>
 
-//                 <br></br>
-//                 <br></br>
-//                 <br></br>
 
-//                 <button className='bn'>Add Food</button>
+                                        <TextField
 
-//                  <br></br>
-//                  <br></br>
+                                                autoFocus
+                                                required
+                                                margin="dense"
+                                                multiline
+                                                rows={4}
+                                                id="add"
+                                                name="des"
+                                                label="Food Description"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={(e)=>e.target.value}
+                                        />
+
+
+
+
+                                        </DialogContent>
+
+
+                                        <DialogActions>
+                                                        <Button onClick={handleclose}>Cancel</Button>
+                                                        <Button type="submit">Add</Button>
+                                        </DialogActions>
+
+                                </Dialog>  
                  
                 
 
 
-//           </form>
-//       </div>    
-//     </div>
-//   )
-// }
+        
+    </Box>
+  )
+}
 
 
-// export default Admin
+export default Admin

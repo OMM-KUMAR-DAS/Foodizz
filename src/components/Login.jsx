@@ -187,9 +187,9 @@ const Login = () => {
     
             if(data.success)
             {
-             
-                dispatch(add(data))
                 console.log(data)
+                dispatch(add(data))
+                // console.log(data)
                 navigate('/auth')
             }
             else if(!data.success && data.message==="user is not registered"){

@@ -10,36 +10,23 @@ exports.auth=(req,res,next) =>{
         
         console.log(token)
 
-        if(!token)
-        {
-            return res.status(401).json({
-                success:false,
-                message:"token missing",
-            })
-        }
-
         //verify the token
 
-        try{
+        
             const decode=jwt.verify(token,process.env.JWT_SECRET)  
             
             console.log(decode)
-            //storing the payload in req.user
+            //storing the payload in req.cl
             req.cl=decode
-        }catch(error)
-        {
-            return res.status(401).json({
-                success:false,
-                message:"token expired log in again",
-            })
-        }
-        next()
+
+        
+            next()
 
     }catch(error)
     { 
           return res.status(401).json({
-            success:false,
-            message:"something is wrong"
+            success:"false",
+            message:"Something went wroong"
           })
     }
 }
@@ -52,7 +39,8 @@ exports.isStudent=(req,res,next)=>{
         if(req.cl.role !="Student")
         {
             return res.status(401).json({
-                success:false,
+                
+                success:"false",
                 message:"entry restricted"
             })
         }

@@ -16,7 +16,11 @@ exports.addfoods = async(req,res) => {
                 message:addfood
             })
         }
-        catch(error){
-             res.status(500).send("oops")
+        catch(err){
+             res.status(500).json({
+                success:"false",
+                message:"internal server error",
+                error:err
+             })
         } 
 }  

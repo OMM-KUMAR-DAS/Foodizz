@@ -13,11 +13,16 @@ const tokenSlice= createSlice({
         
         add(state,action) {
             state.push(action.payload);
+        },
+        deletetoken(state)
+        {
+            state[0].token=''
+            //state=initialState
         }
 
       
     }
 })
 
-export const {add} = tokenSlice.actions
+export const {add,deletetoken} = tokenSlice.actions
 export default tokenSlice.reducer
