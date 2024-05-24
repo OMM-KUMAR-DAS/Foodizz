@@ -14,10 +14,10 @@ const tokenSlice= createSlice({
         add(state,action) {
             state.push(action.payload);
         },
-        deletetoken(state)
+        deletetoken()
         {
-            state[0].token=''
-            //state=initialState
+            
+           return initialState
         }
 
       
