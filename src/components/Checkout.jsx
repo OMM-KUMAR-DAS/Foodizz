@@ -136,7 +136,7 @@ const Checkout = () => {
                             <Paper 
                                 elevation={3}
                                 sx={{
-                                  height: 400, 
+                                  maxHeight:'400px', 
                                   overflowY: 'auto',
                                   p: 2,
                                   width:'50%',
@@ -145,10 +145,13 @@ const Checkout = () => {
                                   borderRadius:'30px',
                                   marginTop:'20px',
                                   '&::-webkit-scrollbar': {
-                                    display: 'none',
-                                  },
-                                  '-ms-overflow-style': 'none',  // Internet Explorer 10+
-                                  'scrollbar-width': 'none',  // Firefox
+                                    width: '5px',
+                                },
+                                '&::-webkit-scrollbar-thumb': {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                    borderRadius: '10px',
+                                },
+
                                  
                                   '&:hover': {
                                     boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.9)',
