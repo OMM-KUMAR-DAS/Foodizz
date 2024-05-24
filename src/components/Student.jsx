@@ -66,17 +66,16 @@ const Student = () => {
   useEffect(() => {
 
 
-    console.log(ele[0])
-    if(ele[0].token==='')
+    if(ele.length===0)
       {
-        navigate('/login')
-        toast.error(`Successfully logout`, {
-          position: toast.TOP_CENTER,
+        toast.dark(`Successfully logged out`, {
+          position: toast.TOP_CENTER
         });
+        navigate('/login')
 
-        return
+        return 
       }
-    
+   
 
 
     function getfoods() {
@@ -252,6 +251,7 @@ const Student = () => {
       top: 0,
       behavior: 'smooth', // Smooth scroll animation
     });
+
   }
 
   function logout()
